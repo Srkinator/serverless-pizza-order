@@ -1,0 +1,11 @@
+{
+  "lambda": {
+    "role": "pizza-order",
+    "name": "pizza",
+    "region": "us-west-2"
+  },
+  "api": {
+    "id": "h41843034o",
+    "module": "api"
+  }
+}
