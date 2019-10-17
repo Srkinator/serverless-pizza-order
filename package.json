@@ -1,0 +1,19 @@
+{
+  "name": "serverless-pizza-order",
+  "version": "1.0.0",
+  "description": "Serverless app for pizza ordering and delivery",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Srkinator/serverless-pizza-order.git"
+  },
+  "author": "Srdjan Popovic",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Srkinator/serverless-pizza-order/issues"
+  },
+  "homepage": "https://github.com/Srkinator/serverless-pizza-order#readme"
+}
