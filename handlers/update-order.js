@@ -9,7 +9,7 @@ function updateOrder(orderId, options) {
 
   return docClient.update({
     TableName: 'pizza-orders',
-    Key: { // <3>
+    Key: {
       orderId: orderId
     },
     UpdateExpression: 'set pizza = :p, address=:a',
@@ -19,11 +19,12 @@ function updateOrder(orderId, options) {
     },
     ReturnValues: 'ALL_NEW'
   }).promise()
-    .then((result) => {
+    .then(result => {
       console.log('Order is updated!', result)
+
       return result.Attributes
     })
-    .catch((updateError) => {
+    .catch(updateError => {
       console.log(`Oops, order is not updated :(`, updateError)
       throw updateError
     })

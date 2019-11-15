@@ -17,6 +17,10 @@ function getOrders(orderId) {
     }
   }).promise()
     .then(result => result.Item)
+    .catch(getError => {
+      console.log(getError)
+      throw `Order with ID ${orderId} was not found`
+    })
 }
 
 module.exports = getOrders
