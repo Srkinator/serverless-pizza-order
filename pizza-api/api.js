@@ -7,7 +7,7 @@ const getPizzas = require('./handlers/get-pizzas')
 const createOrder = require('./handlers/create-order')
 const updateOrder = require('./handlers/update-order')
 const deleteOrder = require('./handlers/delete-order')
-const getSignedUrl = require('./handlers/generate-presigned-url.js')
+const getSignedUrl = require('./pizza-api/handlers/generate-presigned-url.js.js')
 
 api.registerAuthorizer('userAuthentication', {
   providerARNs: [process.env.userPoolArn]
