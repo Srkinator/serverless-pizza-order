@@ -14,7 +14,7 @@ function createOrder(request) {
     userAddress = JSON.parse(userData.address).formatted
   }
 
-  if (!request.body || !request.body.pizza || !userAddress)
+  if (!request.body || !request.body.pizza || userAddress)
     throw new Error('To order pizza please provide pizza type and address where pizza should be delivered')
 
   return rp.post('https://fake-delivery-api.effortlessserverless.com/delivery', {

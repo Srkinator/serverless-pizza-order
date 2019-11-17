@@ -7,7 +7,7 @@ const getPizzas = require('./handlers/get-pizzas')
 const createOrder = require('./handlers/create-order')
 const updateOrder = require('./handlers/update-order')
 const deleteOrder = require('./handlers/delete-order')
-const updateDeliveryStatus = require('./handlers/update-delivery-status')
+const getSignedUrl = require('./handlers/generate-presigned-url.js')
 
 api.registerAuthorizer('userAuthentication', {
   providerARNs: [process.env.userPoolArn]
@@ -57,6 +57,25 @@ api.post('delivery', (request) => {
   success: 200,
   error: 400
 }, {
+  cognitoAuthorizer: 'userAuthentication'
+})
+
+api.post('delivery', (request) => {
+  return updateDeliveryStatus(request.body)
+}, {
+  success: 200,
+  error: 400
+}, {
+  cognitoAuthorizer: 'userAuthentication'
+})
+
+api.get('upload-url', (request) => {
+  return getSignedUrl()
+},
+{
+  error: 400
+},
+{
   cognitoAuthorizer: 'userAuthentication'
 })
 
