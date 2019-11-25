@@ -1,23 +1,28 @@
 'use strict'
 
 const AWS = require('aws-sdk')
-const docClient = new AWS.DynamoDB.DocumentClient()
+
 const rp = require('minimal-request-promise')
 
-function createOrder(request) {
-  console.log('Save an order', request.body)
-  const userData = request.context.authorizer.claims
-  console.log('User data', userData)
+function createOrder(request, tableName) {
+  tableName = tableName || 'pizza-orders'
 
-  let userAddress = request.body && request.body.address
+  const docClient = new AWS.DynamoDB.DocumentClient({
+    region: process.env.AWS_DEFAULT_REGION
+  })
+  let userAddress = request && request.body && request.body.address;
   if (!userAddress) {
+    const userData = request && request.context && request.context.authorizer && request.context.authorizer.claims;
+    if (!userData)
+      throw new Error()
+    // console.log('User data', userData)
     userAddress = JSON.parse(userData.address).formatted
   }
 
-  if (!request.body || !request.body.pizza || userAddress)
+  if (!request || !request.body || !request.body.pizza || !userAddress)
     throw new Error('To order pizza please provide pizza type and address where pizza should be delivered')
 
-  return rp.post('https://fake-delivery-api.effortlessserverless.com/delivery', {
+  return rp.post('https://some-like-it-hot-api.effortlessserverless.com/delivery', {
     headers: {
       Authorization: 'aunt-marias-pizzeria-1234567890',
       'Content-type': 'application/json'
@@ -32,7 +37,7 @@ function createOrder(request) {
     .then(rawResponse => JSON.parse(rawResponse.body))
     .then(response => {
       return docClient.put({
-        TableName: 'pizza-orders',
+        TableName: tableName,
         Item: {
           cognitoUsername: userAddress['cognito:username'],
           orderId: response.deliveryId,
